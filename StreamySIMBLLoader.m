@@ -17,19 +17,22 @@
 }
 
 - (void) dealloc {
-	[streamy_controller release];
+	[streamyController release];
 	[super dealloc];
 }
 
 - (id) init {
 	self = [super init];
+	
 	if (!self) {
 		return nil;
 	}
+	
 	#ifdef DEBUG
 	NSLog(@"Streamy loaded!");
 	#endif
-	streamy_controller = [[StreamyController alloc] init];
+	
+	streamyController = [[StreamyController alloc] init];
 
 	return self;
 }

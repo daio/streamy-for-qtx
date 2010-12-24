@@ -37,30 +37,30 @@
 }
 
 - (IBAction) refreshInfo: (id) sender {
-	NSWindow *cur_window;
-	NSArray *allwindows = [NSApp windows];
-	NSEnumerator *window_enum = [allwindows objectEnumerator];
-	NSDocument *qt_view;
-	QTMovie *qt_movie;
+	NSWindow *curWindow;
+	NSArray *allWindows = [NSApp windows];
+	NSEnumerator *windowEnum = [allWindows objectEnumerator];
+	NSDocument *qtView;
+	QTMovie *qtMovie;
 	NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
 	
 	[menu_controller resetMenuToDefault];
 	
-	while ((cur_window = [window_enum nextObject]) != nil) {
-		qt_view = [documentController documentForWindow:cur_window];
+	while ((curWindow = [windowEnum nextObject]) != nil) {
+		qtView = [documentController documentForWindow:curWindow];
 		
-		if (qt_view != nil) {			
-			qt_movie = nil;
+		if (qtView != nil) {			
+			qtMovie = nil;
 			
 			#ifdef DEBUG
-			NSLog(@"%@",[[cur_window contentView] printJobTitle]);
+			NSLog(@"%@",[[curWindow contentView] printJobTitle]);
 			#endif
 			
-			if ([qt_view respondsToSelector:@selector(movie)]) {
+			if ([qtView respondsToSelector:@selector(movie)]) {
 				#ifdef DEBUG
 				NSLog(@"Found a movie!");
 				#endif
-				[menu_controller addMovieMenu:[qt_view movie] :cur_window];
+				[menu_controller addMovieMenu:[qtView movie] :curWindow];
 			}
 		}
 	}

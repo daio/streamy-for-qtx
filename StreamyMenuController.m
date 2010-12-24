@@ -81,7 +81,7 @@
 	
 	if (qtMovie != nil) {
 		tracksEnum = [[qtMovie tracks] objectEnumerator];
-		[self addMovieBanner:qt_movie:curWindow];
+		[self addMovieBanner:qtMovie:curWindow];
 		videoSubMenu = [self createCategoryMenu: @"Video"];
 		audioSubMenu = [self createCategoryMenu: @"Audio"];
 		otherSubMenu = [self createCategoryMenu: @"Other"];

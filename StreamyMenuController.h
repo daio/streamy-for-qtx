@@ -12,6 +12,6 @@
 	IBOutlet NSMenu* topMenu;
 }
 - (id) init : (NSString *) title;
-- (void) addMovieMenu: (QTMovie *) qt_movie : (NSWindow *) cur_window;
+- (void) addMovieMenu: (QTMovie *) qtMovie : (NSWindow *) curWindow;
 - (void) resetMenuToDefault;
 @end

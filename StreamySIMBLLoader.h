@@ -11,7 +11,7 @@
 #import "StreamyController.h"
 
 @interface StreamySIMBLLoader : NSObject {
-	StreamyController *streamy_controller;
+	StreamyController *streamyController;
 }
 
 @end
