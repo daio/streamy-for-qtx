@@ -135,7 +135,7 @@
 	options = [NSDictionary dictionaryWithObjectsAndKeys:
 			   @"Streamy", @"ApplicationName",
 			   icon, @"ApplicationIcon",
-			   @"0.1",@"Version",
+			   @"0.2",@"Version",
 			   @"",@"ApplicationVersion",
 			   @"daioptych@gmail.com",@"Copyright",
 			   nil];
