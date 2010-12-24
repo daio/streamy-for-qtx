@@ -6,7 +6,6 @@
 #import "QTKit/QTKit.h"
 #import "StreamyMenuController.h"
 
-
 @interface StreamyController : NSObject {
 	StreamyMenuController *menu_controller;
 }

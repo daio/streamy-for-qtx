@@ -26,6 +26,7 @@
 }
 
 - (void) dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[menu_controller release];
 	[super dealloc];
 }

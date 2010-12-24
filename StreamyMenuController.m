@@ -18,6 +18,10 @@
 	return self;
 }
 
+- (void) postRefresh: (id) sender {
+	[[NSNotificationCenter defaultCenter] postNotificationName:QTMovieEditedNotification object:self];
+}
+
 - (void) addMovieBanner: (QTMovie *) qt_movie: (NSWindow *) cur_window {
 	NSMenuItem *new_item;
 	[topMenu addItem:[NSMenuItem separatorItem]];
@@ -46,14 +50,9 @@
 	NSLog(@"Toggled track: %@", [track description]);		
 	#endif
 	if (track != nil) {
-		if ([track isEnabled]) {
-			[track setEnabled:NO];
-			[sender setState:NSOffState];
-		} else {
-			[track setEnabled:YES];
-			[sender setState:NSOnState];
-		}
+		[track setEnabled:![track isEnabled]];
 	}
+	[self postRefresh:sender];
 }
 
 - (void) addMovieMenu: (QTMovie *) qt_movie: (NSWindow *) cur_window {
@@ -118,7 +117,6 @@
 			   @"",@"ApplicationVersion",
 			   @"daioptych@gmail.com",@"Copyright",
 			   nil];
-	NSLog(@"About panel called");
 	[NSApp orderFrontStandardAboutPanelWithOptions: options];
 }
 
@@ -128,11 +126,13 @@
 	[topMenu setTitle: @"Streamy"];
 	[topMenu setAutoenablesItems:NO];
 	item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:@"About" action:@selector(orderFrontAboutPanel:) keyEquivalent:@""];
+	[item setTarget:self];
 	[topMenu addItem:item];
 	[item release];
-//	item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:@"About" action:@selector(menuNeedsRefresh:) keyEquivalent:@""];
-//	[topMenu addItem:item];
-//	[item release];
+	item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:@"Refresh" action:@selector(postRefresh:) keyEquivalent:@""];
+	[item setTarget:self];
+	[topMenu addItem:item];
+	[item release];
 }
 
 - (void) awakeFromNib {		
