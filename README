@@ -1,0 +1,19 @@
+Streamy for QuickTime X
+================================
+
+Streamy is a SIMBL plugin for QuickTime X, that lets you enable and disable video, audio and other streams on the fly. Useful to enable/disable or switch subtitles and extra audio tracks in Matroska files with Perian installed.
+
+Instructions
+-------------------------
+1) If you don't yet have SIMBL, install it from [here](http://www.culater.net/software/SIMBL/SIMBL.php).
+2) Quit QuickTime X
+3) Put Streamy.bundle into Library/Application Support/SIMBL/Plugins/ either in your home folder or in the root.
+4) Launch QuickTime X, you should see Streamy menu bar
+
+Troubleshooting
+-------------------------
+If you think the number of streams or videos is wrong click Refresh. If possible, tell me how it happened. On some asynchronously loaded video files(like mkv) it doesn't work well until the video is actually fully loaded.
+
+Notes
+-------------------------
+It's my first relatively big piece of code in ObjC so feel free to comment on it.
