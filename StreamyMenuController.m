@@ -6,6 +6,7 @@
 #import <QTKit/QTKit.h>
 
 @implementation StreamyMenuController
+
 - (id) init : (NSString *) nibName {
 	self = [super init];
 	
@@ -165,4 +166,5 @@
 }
 
 
+@synthesize topMenu;
 @end

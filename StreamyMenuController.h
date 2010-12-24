@@ -9,9 +9,11 @@
 //#define DEBUG 1
 #endif
 @interface StreamyMenuController : NSObject {
+@private
 	IBOutlet NSMenu* topMenu;
 }
 - (id) init : (NSString *) title;
 - (void) addMovieMenu: (QTMovie *) qtMovie : (NSWindow *) curWindow;
 - (void) resetMenuToDefault;
+@property (retain) NSMenu* topMenu;
 @end

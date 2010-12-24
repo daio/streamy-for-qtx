@@ -39,14 +39,13 @@
 - (IBAction) refreshInfo: (id) sender {
 	NSWindow *curWindow;
 	NSArray *allWindows = [NSApp windows];
-	NSEnumerator *windowEnum = [allWindows objectEnumerator];
 	NSDocument *qtView;
 	QTMovie *qtMovie;
 	NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
 	
 	[menu_controller resetMenuToDefault];
 	
-	while ((curWindow = [windowEnum nextObject]) != nil) {
+	for (curWindow in allWindows) {
 		qtView = [documentController documentForWindow:curWindow];
 		
 		if (qtView != nil) {			
@@ -75,5 +74,6 @@
 	[self refreshInfo:nil];
 }
 
+@synthesize menu_controller;
 @end
 

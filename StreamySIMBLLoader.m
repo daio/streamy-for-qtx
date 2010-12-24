@@ -36,4 +36,5 @@
 
 	return self;
 }
+@synthesize streamyController;
 @end

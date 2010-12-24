@@ -7,8 +7,10 @@
 #import "StreamyMenuController.h"
 
 @interface StreamyController : NSObject {
+@private
 	StreamyMenuController *menu_controller;
 }
 - (id) init;
 - (IBAction) refreshInfo: (id) sender;
+@property (retain) StreamyMenuController *menu_controller;
 @end
