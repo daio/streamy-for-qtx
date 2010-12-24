@@ -8,13 +8,17 @@
 @implementation StreamyMenuController
 - (id) init : (NSString *) nibName {
 	self = [super init];
+	
 	if (!self) {
 		return nil;
 	}
+	
 	[NSBundle loadNibNamed:nibName owner: self];
+	
 	#ifdef DEBUG
 	NSLog(@"Menu controller initialized!");
 	#endif
+	
 	return self;
 }
 
@@ -22,24 +26,33 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:QTMovieEditedNotification object:self];
 }
 
-- (void) addMovieBanner: (QTMovie *) qt_movie: (NSWindow *) cur_window {
+- (void) addMenuItem: (NSString *)menu_title:(SEL) menu_action:(id) menu_target {
 	NSMenuItem *new_item;
-	[topMenu addItem:[NSMenuItem separatorItem]];
-	new_item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[cur_window title] action:NULL keyEquivalent:@""];
-	[new_item setTarget:cur_window];
-	[new_item setAction:@selector(orderFront:)];
+	
+	new_item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:menu_title action:menu_action keyEquivalent:@""];
+	[new_item setTarget:menu_target];
 	[topMenu addItem:new_item];
 	[new_item release];
 }
 
+- (void) addMovieBanner: (QTMovie *) qt_movie: (NSWindow *) cur_window {
+	NSMenuItem *new_item;
+	
+	[topMenu addItem:[NSMenuItem separatorItem]];
+	[self addMenuItem: [cur_window title]: @selector(orderFront:) : cur_window];
+}
+
 - (NSMenu *) createCategoryMenu: (NSString *) title {
 	NSMenu *new_menu = [[NSMenu allocWithZone:[self zone]] initWithTitle:title];
+	
 	[new_menu setAutoenablesItems:NO];
+	
 	return new_menu;
 }
 
 - (void) addCategoryMenu:(NSMenu *) menu {
 	NSMenuItem *new_item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[menu title] action:NULL keyEquivalent:@""];
+	
 	[new_item setSubmenu:menu];
 	[topMenu addItem:new_item];
 	[new_item release];
@@ -125,14 +138,8 @@
 	[topMenu removeAllItems];
 	[topMenu setTitle: @"Streamy"];
 	[topMenu setAutoenablesItems:NO];
-	item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:@"About" action:@selector(orderFrontAboutPanel:) keyEquivalent:@""];
-	[item setTarget:self];
-	[topMenu addItem:item];
-	[item release];
-	item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:@"Refresh" action:@selector(postRefresh:) keyEquivalent:@""];
-	[item setTarget:self];
-	[topMenu addItem:item];
-	[item release];
+	[self addMenuItem: @"About": @selector(orderFrontAboutPanel:) : self];
+	[self addMenuItem: @"Refresh": @selector(postRefresh:) : self];
 }
 
 - (void) awakeFromNib {		
