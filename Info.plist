@@ -23,7 +23,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>NSPrincipalClass</key>
-	<string>StreamyController</string>
+	<string>StreamySIMBLLoader</string>
 	<key>SIMBLTargetApplications</key>
 	<array>
 		<dict>

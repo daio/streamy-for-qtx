@@ -11,6 +11,8 @@
 		24CF81E912C3B2D500350769 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24CF81E812C3B2D500350769 /* QuickTime.framework */; };
 		24CF81F412C3B41900350769 /* StreamyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CF81F312C3B41900350769 /* StreamyController.m */; };
 		24CF826B12C3C0DF00350769 /* StreamyMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24CF826A12C3C0DF00350769 /* StreamyMenu.xib */; };
+		24EC0E7712C5105800D41E61 /* StreamyMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EC0E7612C5105800D41E61 /* StreamyMenuController.m */; };
+		24EC0E7D12C510D400D41E61 /* StreamySIMBLLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 24EC0E7C12C510D400D41E61 /* StreamySIMBLLoader.m */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -28,6 +30,10 @@
 		24CF81F212C3B41900350769 /* StreamyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamyController.h; sourceTree = "<group>"; };
 		24CF81F312C3B41900350769 /* StreamyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamyController.m; sourceTree = "<group>"; };
 		24CF826A12C3C0DF00350769 /* StreamyMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StreamyMenu.xib; sourceTree = "<group>"; };
+		24EC0E7512C5105800D41E61 /* StreamyMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamyMenuController.h; sourceTree = "<group>"; };
+		24EC0E7612C5105800D41E61 /* StreamyMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamyMenuController.m; sourceTree = "<group>"; };
+		24EC0E7B12C510D400D41E61 /* StreamySIMBLLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamySIMBLLoader.h; sourceTree = "<group>"; };
+		24EC0E7C12C510D400D41E61 /* StreamySIMBLLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamySIMBLLoader.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* QTStreamy_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTStreamy_Prefix.pch; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* Streamy.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Streamy.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +91,10 @@
 			children = (
 				24CF81F212C3B41900350769 /* StreamyController.h */,
 				24CF81F312C3B41900350769 /* StreamyController.m */,
+				24EC0E7512C5105800D41E61 /* StreamyMenuController.h */,
+				24EC0E7612C5105800D41E61 /* StreamyMenuController.m */,
+				24EC0E7B12C510D400D41E61 /* StreamySIMBLLoader.h */,
+				24EC0E7C12C510D400D41E61 /* StreamySIMBLLoader.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -190,6 +200,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				24CF81F412C3B41900350769 /* StreamyController.m in Sources */,
+				24EC0E7712C5105800D41E61 /* StreamyMenuController.m in Sources */,
+				24EC0E7D12C510D400D41E61 /* StreamySIMBLLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +226,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -233,7 +246,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_OBJC_GC = supported;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_FAST_MATH = YES;
 				GCC_MODEL_TUNING = G5;

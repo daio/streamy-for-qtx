@@ -4,13 +4,12 @@
 #import <Cocoa/Cocoa.h>
 #include <QuickTime/QuickTime.h>
 #import "QTKit/QTKit.h"
+#import "StreamyMenuController.h"
 
 
 @interface StreamyController : NSObject {
-	IBOutlet NSMenu* topMenu;
+	StreamyMenuController *menu_controller;
 }
-- (void) loadStateChanged: (NSNotification *) notification;
-- (IBAction) orderFrontAboutPanel: (id) sender;
+- (id) init;
 - (IBAction) refreshInfo: (id) sender;
-- (IBAction) toggleTrack: (id) sender;
 @end
