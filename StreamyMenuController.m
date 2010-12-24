@@ -26,20 +26,20 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:QTMovieEditedNotification object:self];
 }
 
-- (void) addMenuItem: (NSString *)menu_title:(SEL) menu_action:(id) menu_target {
-	NSMenuItem *new_item;
+- (void) addMenuItem: (NSString *)menu_title:(SEL) menu_action:(id) menuTarget {
+	NSMenuItem *newItem;
 	
-	new_item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:menu_title action:menu_action keyEquivalent:@""];
-	[new_item setTarget:menu_target];
-	[topMenu addItem:new_item];
-	[new_item release];
+	newItem = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:menu_title action:menu_action keyEquivalent:@""];
+	[newItem setTarget:menuTarget];
+	[topMenu addItem:newItem];
+	[newItem release];
 }
 
-- (void) addMovieBanner: (QTMovie *) qt_movie: (NSWindow *) cur_window {
-	NSMenuItem *new_item;
+- (void) addMovieBanner: (QTMovie *) qtMovie: (NSWindow *) curWindow {
+	NSMenuItem *newItem;
 	
 	[topMenu addItem:[NSMenuItem separatorItem]];
-	[self addMenuItem: [cur_window title]: @selector(orderFront:) : cur_window];
+	[self addMenuItem: [curWindow title]: @selector(orderFront:) : curWindow];
 }
 
 - (NSMenu *) createCategoryMenu: (NSString *) title {
@@ -51,70 +51,78 @@
 }
 
 - (void) addCategoryMenu:(NSMenu *) menu {
-	NSMenuItem *new_item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[menu title] action:NULL keyEquivalent:@""];
+	NSMenuItem *newItem = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[menu title] action:NULL keyEquivalent:@""];
 	
-	[new_item setSubmenu:menu];
-	[topMenu addItem:new_item];
-	[new_item release];
+	[newItem setSubmenu:menu];
+	[topMenu addItem:newItem];
+	[newItem release];
 }
 - (IBAction) toggleTrack: (id) sender {
 	QTTrack *track = [sender representedObject];
+	
 	#ifdef DEBUG
 	NSLog(@"Toggled track: %@", [track description]);		
 	#endif
+	
 	if (track != nil) {
 		[track setEnabled:![track isEnabled]];
 	}
+	
 	[self postRefresh:sender];
 }
 
-- (void) addMovieMenu: (QTMovie *) qt_movie: (NSWindow *) cur_window {
-	NSEnumerator *tracks_enum;
-	NSMenuItem *new_item;
-	NSMenu *video_submenu;
-	NSMenu *audio_submenu;
-	NSMenu *other_submenu;
+- (void) addMovieMenu: (QTMovie *) qtMovie: (NSWindow *) curWindow {
+	NSEnumerator *tracksEnum;
+	NSMenuItem *newItem;
+	NSMenu *videoSubMenu;
+	NSMenu *audioSubMenu;
+	NSMenu *otherSubMenu;
 	QTTrack *track;
 	
-	if (qt_movie != nil) {
-		tracks_enum = [[qt_movie tracks] objectEnumerator];
-		[self addMovieBanner:qt_movie:cur_window];
-		video_submenu = [self createCategoryMenu: @"Video"];
-		audio_submenu = [self createCategoryMenu: @"Audio"];
-		other_submenu = [self createCategoryMenu: @"Other"];
-		while ((track = [tracks_enum nextObject]) != nil) {
-			new_item = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[track attributeForKey:QTTrackDisplayNameAttribute]
+	if (qtMovie != nil) {
+		tracksEnum = [[qtMovie tracks] objectEnumerator];
+		[self addMovieBanner:qt_movie:curWindow];
+		videoSubMenu = [self createCategoryMenu: @"Video"];
+		audioSubMenu = [self createCategoryMenu: @"Audio"];
+		otherSubMenu = [self createCategoryMenu: @"Other"];
+		while ((track = [tracksEnum nextObject]) != nil) {
+			newItem = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[track attributeForKey:QTTrackDisplayNameAttribute]
 																	  action:NULL keyEquivalent:@""];
-			[new_item setRepresentedObject:track];
-			[new_item setTarget:self];
-			[new_item setAction:@selector(toggleTrack:)];
+			[newItem setRepresentedObject:track];
+			[newItem setTarget:self];
+			[newItem setAction:@selector(toggleTrack:)];
+			
 			if ([track isEnabled]) {
-				[new_item setState:NSOnState];
+				[newItem setState:NSOnState];
 			}
 			else {
-				[new_item setState:NSOffState];
+				[newItem setState:NSOffState];
 			}
-			[new_item setEnabled:YES];
+			[newItem setEnabled:YES];
+			
 			if ([[track attributeForKey:QTTrackMediaTypeAttribute] isEqualToString:@"vide" ]) {
-				[video_submenu addItem:new_item];
+				[videoSubMenu addItem:newItem];
 			} else if ([[track attributeForKey:QTTrackMediaTypeAttribute] isEqualToString:@"soun"]) {
-				[audio_submenu addItem:new_item];
+				[audioSubMenu addItem:newItem];
 			}
 			else {		
-				[other_submenu addItem:new_item];
+				[otherSubMenu addItem:newItem];
 			}
+			
 			#ifdef DEBUG
 			NSLog(@"Media: %@", [track attributeForKey:QTTrackMediaTypeAttribute]);		
 			#endif
-			[new_item release];
+			
+			[newItem release];
 		}
-		[self addCategoryMenu: video_submenu];
-		[self addCategoryMenu: audio_submenu];
-		[self addCategoryMenu: other_submenu];
 		
-		[video_submenu release];
-		[audio_submenu release];
-		[other_submenu release];
+		[self addCategoryMenu: videoSubMenu];
+		[self addCategoryMenu: audioSubMenu];
+		[self addCategoryMenu: otherSubMenu];
+		
+		[videoSubMenu release];
+		[audioSubMenu release];
+		[otherSubMenu release];
 	}
 	
 }
@@ -123,6 +131,7 @@
 	NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFileType: @"bundle"];
 	[icon setSize: NSMakeSize(128, 128)];
 	NSDictionary* options;
+	
 	options = [NSDictionary dictionaryWithObjectsAndKeys:
 			   @"Streamy", @"ApplicationName",
 			   icon, @"ApplicationIcon",
@@ -130,14 +139,17 @@
 			   @"",@"ApplicationVersion",
 			   @"daioptych@gmail.com",@"Copyright",
 			   nil];
+	
 	[NSApp orderFrontStandardAboutPanelWithOptions: options];
 }
 
 - (void) resetMenuToDefault {
 	NSMenuItem* item;
+	
 	[topMenu removeAllItems];
 	[topMenu setTitle: @"Streamy"];
 	[topMenu setAutoenablesItems:NO];
+	
 	[self addMenuItem: @"About": @selector(orderFrontAboutPanel:) : self];
 	[self addMenuItem: @"Refresh": @selector(postRefresh:) : self];
 }

@@ -12,21 +12,26 @@
 
 - (id) init {
 	self = [super init];
+	
 	if (!self) {
 		return nil;
 	}
+	
 	#ifdef DEBUG
 	NSLog(@"Streamy controller initialized!");
 	#endif
+	
 	menu_controller = [[StreamyMenuController alloc] init:@"StreamyMenu"];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshInfo:) name:QTMovieLoadStateDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshInfo:) name:QTMovieEditedNotification object:nil];
+	
 	return self;
 }
 
 - (void) dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	
 	[menu_controller release];
 	[super dealloc];
 }
@@ -38,14 +43,19 @@
 	NSDocument *qt_view;
 	QTMovie *qt_movie;
 	NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
+	
 	[menu_controller resetMenuToDefault];
+	
 	while ((cur_window = [window_enum nextObject]) != nil) {
 		qt_view = [documentController documentForWindow:cur_window];
-		if (qt_view != nil) {
+		
+		if (qt_view != nil) {			
+			qt_movie = nil;
+			
 			#ifdef DEBUG
 			NSLog(@"%@",[[cur_window contentView] printJobTitle]);
 			#endif
-			qt_movie = nil;
+			
 			if ([qt_view respondsToSelector:@selector(movie)]) {
 				#ifdef DEBUG
 				NSLog(@"Found a movie!");
@@ -61,6 +71,7 @@
 	#ifdef DEBUG
 	NSLog(@"Load state changed");
 	#endif
+	
 	[self refreshInfo:nil];
 }
 
