@@ -57,6 +57,7 @@
 	[newItem setSubmenu:menu];
 	[topMenu addItem:newItem];
 	[newItem release];
+	[menu release];
 }
 - (IBAction) toggleTrack: (id) sender {
 	QTTrack *track = [sender representedObject];
@@ -79,13 +80,20 @@
 	NSMenu *audioSubMenu;
 	NSMenu *otherSubMenu;
 	QTTrack *track;
+	QTMovieLoadState loadState;
+	BOOL movieLoaded;
 	
 	if (qtMovie != nil) {
 		tracksEnum = [[qtMovie tracks] objectEnumerator];
+		loadState = [[qtMovie attributeForKey:QTMovieLoadStateAttribute] integerValue];
+		movieLoaded = loadState >= QTMovieLoadStatePlaythroughOK;
+		
 		[self addMovieBanner:qtMovie:curWindow];
+		
 		videoSubMenu = [self createCategoryMenu: @"Video"];
 		audioSubMenu = [self createCategoryMenu: @"Audio"];
 		otherSubMenu = [self createCategoryMenu: @"Other"];
+		
 		while ((track = [tracksEnum nextObject]) != nil) {
 			newItem = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[track attributeForKey:QTTrackDisplayNameAttribute]
 																	  action:NULL keyEquivalent:@""];
@@ -93,22 +101,19 @@
 			[newItem setTarget:self];
 			[newItem setAction:@selector(toggleTrack:)];
 			
-			if ([track isEnabled]) {
+			if ([track isEnabled])
 				[newItem setState:NSOnState];
-			}
-			else {
+			else
 				[newItem setState:NSOffState];
-			}
-			[newItem setEnabled:YES];
 			
-			if ([[track attributeForKey:QTTrackMediaTypeAttribute] isEqualToString:@"vide" ]) {
+			[newItem setEnabled:movieLoaded];
+			
+			if ([[track attributeForKey:QTTrackMediaTypeAttribute] isEqualToString:@"vide" ])
 				[videoSubMenu addItem:newItem];
-			} else if ([[track attributeForKey:QTTrackMediaTypeAttribute] isEqualToString:@"soun"]) {
+			else if ([[track attributeForKey:QTTrackMediaTypeAttribute] isEqualToString:@"soun"])
 				[audioSubMenu addItem:newItem];
-			}
-			else {		
+			else 	
 				[otherSubMenu addItem:newItem];
-			}
 			
 			#ifdef DEBUG
 			NSLog(@"Media: %@", [track attributeForKey:QTTrackMediaTypeAttribute]);		
@@ -120,10 +125,6 @@
 		[self addCategoryMenu: videoSubMenu];
 		[self addCategoryMenu: audioSubMenu];
 		[self addCategoryMenu: otherSubMenu];
-		
-		[videoSubMenu release];
-		[audioSubMenu release];
-		[otherSubMenu release];
 	}
 	
 }
