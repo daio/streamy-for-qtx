@@ -5,10 +5,10 @@ Streamy is a SIMBL plugin for QuickTime X, that lets you enable and disable vide
 
 Instructions
 -------------------------
-1) If you don't yet have SIMBL, install it from [here](http://www.culater.net/software/SIMBL/SIMBL.php).
-2) Quit QuickTime X
-3) Put Streamy.bundle into Library/Application Support/SIMBL/Plugins/ either in your home folder or in the root.
-4) Launch QuickTime X, you should see Streamy menu bar
+1. If you don't yet have SIMBL, install it from [here](http://www.culater.net/software/SIMBL/SIMBL.php).
+2. Quit QuickTime X
+3. Put Streamy.bundle into Library/Application Support/SIMBL/Plugins/ either in your home folder or in the root.
+4. Launch QuickTime X, you should see Streamy menu bar
 
 Troubleshooting
 -------------------------
