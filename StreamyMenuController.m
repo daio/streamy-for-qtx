@@ -138,7 +138,7 @@
 			   icon, @"ApplicationIcon",
 			   @"0.2",@"Version",
 			   @"",@"ApplicationVersion",
-			   @"daioptych@gmail.com",@"Copyright",
+			   @"Daio <daioptych@gmail.com>",@"Copyright",
 			   nil];
 	
 	[NSApp orderFrontStandardAboutPanelWithOptions: options];

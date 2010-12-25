@@ -1,10 +1,5 @@
-//
-//  StreamySIMBLLoader.h
-//  QTStreamy
-//
-//  Created by Daio on 12/24/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+// Made by Daio <daioptych@gmail.com>
+// Some rights reserved: <http://opensource.org/licenses/mit-license.php>
 
 #import <Cocoa/Cocoa.h>
 #import "StreamyMenuController.h"
