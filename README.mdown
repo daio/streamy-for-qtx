@@ -3,6 +3,10 @@ Streamy for QuickTime X
 
 Streamy is a SIMBL plugin for QuickTime X, that lets you enable and disable video, audio and other streams on the fly. Useful to enable/disable or switch subtitles and extra audio tracks in Matroska files with Perian installed.
 
+Download
+-------------------------
+Download the latest compiled version [here](https://github.com/downloads/Daio/Streamy-for-QTX/Streamy.zip).
+
 Instructions
 -------------------------
 1. If you don't yet have SIMBL, install it from [here](http://www.culater.net/software/SIMBL/SIMBL.php).
