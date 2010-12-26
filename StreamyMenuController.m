@@ -76,6 +76,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 - (void) addCategoryMenu:(NSMenu *) menu {
 	NSMenuItem *newItem = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[menu title] action:NULL keyEquivalent:@""];
 	
+	[newItem setHidden: ([menu numberOfItems] == 0)];
 	[newItem setSubmenu:menu];
 	[topMenu addItem:newItem];
 	[newItem release];
@@ -87,16 +88,25 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 	int type = 0;
 	short layer = [[track attributeForKey:QTTrackLayerAttribute] shortValue];
 	NSString *mediaType = [track attributeForKey:QTTrackMediaTypeAttribute];
-	if ([mediaType isEqualToString:QTMediaTypeSubtitle])
+	if (([mediaType isEqualToString:QTMediaTypeSubtitle])||
+		([mediaType isEqualToString:QTMediaTypeClosedCaption]))
 		type = StreamySubtitleTrack;
-	else if ([mediaType isEqualToString:QTMediaTypeSound])
+	else if (([mediaType isEqualToString:QTMediaTypeSound])||
+			 ([mediaType isEqualToString:QTMediaTypeMusic]))
 		type = StreamyAudioTrack;
-	else if ([mediaType isEqualToString:QTMediaTypeVideo ]) {
+	else if ([mediaType isEqualToString:QTMediaTypeVideo]) {
 		if (layer == -1) // Perian puts mkv subs on layer -1
 			type = StreamySubtitleTrack;
 		else
 			type = StreamyVideoTrack;
-	}	
+	}
+	else if (([mediaType isEqualToString:QTMediaTypeMovie])||
+			 ([mediaType isEqualToString:QTMediaTypeFlash])||
+			 ([mediaType isEqualToString:QTMediaTypeSprite])||
+			 ([mediaType isEqualToString:QTMediaTypeMPEG])||
+			 ([mediaType isEqualToString:QTMediaType3D])||
+			 ([mediaType isEqualToString:QTMediaTypeMuxed]))
+		type = StreamyVideoTrack;
 	else 	
 		type = StreamyOtherTrack;
 	return type;
@@ -131,8 +141,8 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 	NSEnumerator *tracksEnum;
 	NSMenuItem *newItem;
 	NSMenu *videoSubMenu;
-	NSMenu *subtitleSubMenu;
 	NSMenu *audioSubMenu;
+	NSMenu *subtitleSubMenu;
 	NSMenu *otherSubMenu;
 	QTTrack *track;
 	QTMovieLoadState loadState;
@@ -147,8 +157,8 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 			[self addMovieBanner:qtMovie:curWindow];
 			
 			videoSubMenu = [self createCategoryMenu: @"Video"];
-			subtitleSubMenu = [self createCategoryMenu: @"Subtitles"];
 			audioSubMenu = [self createCategoryMenu: @"Audio"];
+			subtitleSubMenu = [self createCategoryMenu: @"Subtitles"];
 			otherSubMenu = [self createCategoryMenu: @"Other"];
 			
 			while ((track = [tracksEnum nextObject]) != nil) {
@@ -171,13 +181,13 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 						[newItem setTag:StreamyVideoTrack];
 						[videoSubMenu addItem:newItem];
 						break;
-					case StreamySubtitleTrack:
-						[newItem setTag:StreamySubtitleTrack];
-						[subtitleSubMenu addItem:newItem];
-						break;
 					case StreamyAudioTrack:
 						[newItem setTag:StreamyAudioTrack];
 						[audioSubMenu addItem:newItem];
+						break;
+					case StreamySubtitleTrack:
+						[newItem setTag:StreamySubtitleTrack];
+						[subtitleSubMenu addItem:newItem];
 						break;
 					default:
 						[newItem setTag:StreamyOtherTrack];
@@ -193,8 +203,8 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 			}
 			
 			[self addCategoryMenu: videoSubMenu];
-			[self addCategoryMenu: subtitleSubMenu];
 			[self addCategoryMenu: audioSubMenu];
+			[self addCategoryMenu: subtitleSubMenu];
 			[self addCategoryMenu: otherSubMenu];
 		}
 	}
