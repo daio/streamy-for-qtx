@@ -4,6 +4,7 @@
 #import "StreamyMenuController.h"
 #import <QuickTime/QuickTime.h>
 #import <QTKit/QTKit.h>
+#import "StreamySettingsController.h"
 
 @implementation StreamyMenuController
 
@@ -16,6 +17,8 @@
 	
 	[NSBundle loadNibNamed:nibName owner: self];
 	
+	settingsController = [[StreamySettingsController alloc] init];
+	
 	#ifdef DEBUG
 	NSLog(@"Menu controller initialized!");
 	#endif
@@ -23,6 +26,11 @@
 	return self;
 }
 
+- (void) dealloc {
+	[settingsController release];
+	
+	[super dealloc];	
+}
 
 - (void) postRefresh: (id) sender {
 	[[NSNotificationCenter defaultCenter] postNotificationName:QTMovieEditedNotification object:self];
@@ -150,6 +158,9 @@
 	[NSApp orderFrontStandardAboutPanelWithOptions: options];
 }
 
+- (void) callSettings: (id) sender {
+	[settingsController showSettings:sender];
+}
 
 - (void) resetMenuToDefault {
 	[topMenu removeAllItems];
@@ -158,6 +169,7 @@
 	
 	[self addMenuItem: @"About": @selector(orderFrontAboutPanel:) : self];
 	[self addMenuItem: @"Refresh": @selector(postRefresh:) : self];
+	[self addMenuItem: @"Settings" : @selector(callSettings:) :self];
 }
 
 
@@ -172,4 +184,5 @@
 }
 
 @synthesize topMenu;
+@synthesize settingsController;
 @end

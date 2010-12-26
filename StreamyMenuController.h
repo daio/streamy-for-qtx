@@ -4,16 +4,19 @@
 #import <Cocoa/Cocoa.h>
 #import <QuickTime/QuickTime.h>
 #import <QTKit/QTKit.h>
+#import "StreamySettingsController.h"
 
 #ifndef DEBUG
 //#define DEBUG 1
 #endif
 @interface StreamyMenuController : NSObject {
 @private
-	IBOutlet NSMenu* topMenu;
+	IBOutlet NSMenu *topMenu;
+	IBOutlet StreamySettingsController *settingsController; 
 }
 - (id) init : (NSString *) title;
 - (void) addMovieMenu: (QTMovie *) qtMovie : (NSWindow *) curWindow;
 - (void) resetMenuToDefault;
 @property (retain) NSMenu* topMenu;
+@property (retain) StreamySettingsController *settingsController;
 @end

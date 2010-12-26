@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		245C046212C6BE9C003F561F /* StreamySettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 245C046112C6BE9C003F561F /* StreamySettings.xib */; };
+		245C046F12C6BEDD003F561F /* StreamySettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 245C046E12C6BEDD003F561F /* StreamySettingsController.m */; };
 		24703DF812C4330E006AAC56 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24703DF712C4330E006AAC56 /* QTKit.framework */; };
 		24CF81E912C3B2D500350769 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24CF81E812C3B2D500350769 /* QuickTime.framework */; };
 		24CF81F412C3B41900350769 /* StreamyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24CF81F312C3B41900350769 /* StreamyController.m */; };
@@ -22,6 +24,9 @@
 		089C167EFE841241C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		245C046112C6BE9C003F561F /* StreamySettings.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StreamySettings.xib; sourceTree = "<group>"; };
+		245C046D12C6BEDD003F561F /* StreamySettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamySettingsController.h; sourceTree = "<group>"; };
+		245C046E12C6BEDD003F561F /* StreamySettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamySettingsController.m; sourceTree = "<group>"; };
 		24703DF712C4330E006AAC56 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
 		247F040112C4CF750055CF51 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		247F041812C4CFDF0055CF51 /* Instructions.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Instructions.rtf; sourceTree = "<group>"; };
@@ -82,6 +87,7 @@
 				24CF826A12C3C0DF00350769 /* StreamyMenu.xib */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				247F041812C4CFDF0055CF51 /* Instructions.rtf */,
+				245C046112C6BE9C003F561F /* StreamySettings.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -95,6 +101,8 @@
 				24EC0E7612C5105800D41E61 /* StreamyMenuController.m */,
 				24EC0E7B12C510D400D41E61 /* StreamySIMBLLoader.h */,
 				24EC0E7C12C510D400D41E61 /* StreamySIMBLLoader.m */,
+				245C046D12C6BEDD003F561F /* StreamySettingsController.h */,
+				245C046E12C6BEDD003F561F /* StreamySettingsController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -189,6 +197,7 @@
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				24CF826B12C3C0DF00350769 /* StreamyMenu.xib in Resources */,
+				245C046212C6BE9C003F561F /* StreamySettings.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +211,7 @@
 				24CF81F412C3B41900350769 /* StreamyController.m in Sources */,
 				24EC0E7712C5105800D41E61 /* StreamyMenuController.m in Sources */,
 				24EC0E7D12C510D400D41E61 /* StreamySIMBLLoader.m in Sources */,
+				245C046F12C6BEDD003F561F /* StreamySettingsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
