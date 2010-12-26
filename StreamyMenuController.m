@@ -210,9 +210,9 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 	options = [NSDictionary dictionaryWithObjectsAndKeys:
 			   @"Streamy", @"ApplicationName",
 			   icon, @"ApplicationIcon",
-			   @"0.2",@"Version",
+			   @"0.3",@"Version",
 			   @"",@"ApplicationVersion",
-			   @"Daio <daioptych@gmail.com>",@"Copyright",
+			   @"Get the source code at GitHub!\nhttps://github.com/Daio/Streamy-for-QTX\nDaio <daioptych@gmail.com>",@"Copyright",
 			   nil];
 	
 	[NSApp orderFrontStandardAboutPanelWithOptions: options];
