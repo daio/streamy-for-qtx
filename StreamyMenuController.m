@@ -6,6 +6,8 @@
 #import <QTKit/QTKit.h>
 #import "StreamySettingsController.h"
 
+NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
+
 @implementation StreamyMenuController
 
 - (id) init : (NSString *) nibName {
@@ -18,6 +20,9 @@
 	[NSBundle loadNibNamed:nibName owner: self];
 	
 	settingsController = [[StreamySettingsController alloc] init];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postRefresh:) name:StreamySettingsCouldChange object:settingsController];
+	
+	[self resetMenuToDefault];
 	
 	#ifdef DEBUG
 	NSLog(@"Menu controller initialized!");
@@ -27,13 +32,14 @@
 }
 
 - (void) dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[settingsController release];
 	
 	[super dealloc];	
 }
 
 - (void) postRefresh: (id) sender {
-	[[NSNotificationCenter defaultCenter] postNotificationName:QTMovieEditedNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:StreamyNeedsRefresh object:self];
 }
 
 
@@ -61,6 +67,7 @@
 	return new_menu;
 }
 
+
 - (void) addCategoryMenu:(NSMenu *) menu {
 	NSMenuItem *newItem = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[menu title] action:NULL keyEquivalent:@""];
 	
@@ -69,6 +76,8 @@
 	[newItem release];
 	[menu release];
 }
+
+
 - (IBAction) toggleTrack: (id) sender {
 	QTTrack *track = [sender representedObject];
 	
@@ -159,7 +168,7 @@
 }
 
 - (void) callSettings: (id) sender {
-	[settingsController showSettings:sender];
+	[settingsController showSettings:self];
 }
 
 - (void) resetMenuToDefault {
@@ -167,8 +176,10 @@
 	[topMenu setTitle: @"Streamy"];
 	[topMenu setAutoenablesItems:NO];
 	
-	[self addMenuItem: @"About": @selector(orderFrontAboutPanel:) : self];
-	[self addMenuItem: @"Refresh": @selector(postRefresh:) : self];
+	if ([settingsController showAboutInMenu])
+		[self addMenuItem: @"About": @selector(orderFrontAboutPanel:) : self];
+	if ([settingsController showRefreshInMenu])
+		[self addMenuItem: @"Refresh": @selector(postRefresh:) : self];
 	[self addMenuItem: @"Settings" : @selector(callSettings:) :self];
 }
 
@@ -178,7 +189,6 @@
 	
 	item = [[NSMenuItem allocWithZone:[self zone]] init];
 	[item setSubmenu: topMenu];
-	[self resetMenuToDefault];
 	[[NSApp mainMenu] addItem: item];
 	[item release];
 }

@@ -9,14 +9,21 @@
 #ifndef DEBUG
 //#define DEBUG 1
 #endif
+
+NSString * const StreamyNeedsRefresh;
+
 @interface StreamyMenuController : NSObject {
 @private
 	IBOutlet NSMenu *topMenu;
 	IBOutlet StreamySettingsController *settingsController; 
 }
+
 - (id) init : (NSString *) title;
+
+- (void) postRefresh: (id) sender;
 - (void) addMovieMenu: (QTMovie *) qtMovie : (NSWindow *) curWindow;
 - (void) resetMenuToDefault;
+
 @property (retain) NSMenu* topMenu;
 @property (retain) StreamySettingsController *settingsController;
 @end

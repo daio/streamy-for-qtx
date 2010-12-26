@@ -21,10 +21,11 @@
 	NSLog(@"Streamy controller initialized!");
 	#endif
 	
-	menu_controller = [[StreamyMenuController alloc] init:@"StreamyMenu"];
+	menuController = [[StreamyMenuController alloc] init:@"StreamyMenu"];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshInfo:) name:QTMovieLoadStateDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshInfo:) name:QTMovieEditedNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshInfo:) name:StreamyNeedsRefresh object:menuController];
 	
 	return self;
 }
@@ -32,7 +33,7 @@
 - (void) dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
-	[menu_controller release];
+	[menuController release];
 	[super dealloc];
 }
 
@@ -43,7 +44,7 @@
 	QTMovie *qtMovie;
 	NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
 	
-	[menu_controller resetMenuToDefault];
+	[menuController resetMenuToDefault];
 	
 	for (curWindow in allWindows) {
 		qtView = [documentController documentForWindow:curWindow];
@@ -59,7 +60,7 @@
 				#ifdef DEBUG
 				NSLog(@"Found a movie!");
 				#endif
-				[menu_controller addMovieMenu:[qtView movie] :curWindow];
+				[menuController addMovieMenu:[qtView movie] :curWindow];
 			}
 		}
 	}
@@ -74,6 +75,6 @@
 	[self refreshInfo:nil];
 }
 
-@synthesize menu_controller;
+@synthesize menuController;
 @end
 
