@@ -41,7 +41,6 @@
 	NSWindow *curWindow;
 	NSArray *allWindows = [NSApp windows];
 	NSDocument *qtView;
-	QTMovie *qtMovie;
 	NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
 	
 	[menuController resetMenuToDefault];
@@ -50,8 +49,6 @@
 		qtView = [documentController documentForWindow:curWindow];
 		
 		if (qtView != nil) {			
-			qtMovie = nil;
-			
 			#ifdef DEBUG
 			NSLog(@"%@",[[curWindow contentView] printJobTitle]);
 			#endif
@@ -60,6 +57,7 @@
 				#ifdef DEBUG
 				NSLog(@"Found a movie!");
 				#endif
+				
 				[menuController addMovieMenu:[qtView movie] :curWindow];
 			}
 		}

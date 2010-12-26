@@ -15,7 +15,7 @@ NSString * const StreamyNeedsRefresh;
 @interface StreamyMenuController : NSObject {
 @private
 	IBOutlet NSMenu *topMenu;
-	IBOutlet StreamySettingsController *settingsController; 
+	IBOutlet StreamySettingsController *settingsController;
 }
 
 - (id) init : (NSString *) title;

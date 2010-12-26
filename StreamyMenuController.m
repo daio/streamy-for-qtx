@@ -8,6 +8,11 @@
 
 NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 
+#define StreamyVideoTrack (int)1
+#define StreamySubtitleTrack (int)2
+#define StreamyAudioTrack (int)4
+#define StreamyOtherTrack (int)8
+
 @implementation StreamyMenuController
 
 - (id) init : (NSString *) nibName {
@@ -78,6 +83,26 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 }
 
 
+- (int) getTrackType: (QTTrack *) track {
+	int type = 0;
+	short layer = [[track attributeForKey:QTTrackLayerAttribute] shortValue];
+	NSString *mediaType = [track attributeForKey:QTTrackMediaTypeAttribute];
+	if ([mediaType isEqualToString:QTMediaTypeSubtitle])
+		type = StreamySubtitleTrack;
+	else if ([mediaType isEqualToString:QTMediaTypeSound])
+		type = StreamyAudioTrack;
+	else if ([mediaType isEqualToString:QTMediaTypeVideo ]) {
+		if (layer == -1) // Perian puts mkv subs on layer -1
+			type = StreamySubtitleTrack;
+		else
+			type = StreamyVideoTrack;
+	}	
+	else 	
+		type = StreamyOtherTrack;
+	return type;
+}
+
+
 - (IBAction) toggleTrack: (id) sender {
 	QTTrack *track = [sender representedObject];
 	
@@ -97,11 +122,13 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 	NSEnumerator *tracksEnum;
 	NSMenuItem *newItem;
 	NSMenu *videoSubMenu;
+	NSMenu *subtitleSubMenu;
 	NSMenu *audioSubMenu;
 	NSMenu *otherSubMenu;
 	QTTrack *track;
 	QTMovieLoadState loadState;
 	BOOL movieLoaded;
+	int trackType;
 	
 	if (qtMovie != nil) {
 		tracksEnum = [[qtMovie tracks] objectEnumerator];
@@ -111,6 +138,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 			[self addMovieBanner:qtMovie:curWindow];
 			
 			videoSubMenu = [self createCategoryMenu: @"Video"];
+			subtitleSubMenu = [self createCategoryMenu: @"Subtitles"];
 			audioSubMenu = [self createCategoryMenu: @"Audio"];
 			otherSubMenu = [self createCategoryMenu: @"Other"];
 			
@@ -127,13 +155,22 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 					[newItem setState:NSOffState];
 				
 				[newItem setEnabled:movieLoaded];
-				
-				if ([[track attributeForKey:QTTrackMediaTypeAttribute] isEqualToString:@"vide" ])
-					[videoSubMenu addItem:newItem];
-				else if ([[track attributeForKey:QTTrackMediaTypeAttribute] isEqualToString:@"soun"])
-					[audioSubMenu addItem:newItem];
-				else 	
-					[otherSubMenu addItem:newItem];
+
+				trackType = [self getTrackType:track];
+				switch (trackType) {
+					case StreamyVideoTrack:
+						[videoSubMenu addItem:newItem];
+						break;
+					case StreamySubtitleTrack:
+						[subtitleSubMenu addItem:newItem];
+						break;
+					case StreamyAudioTrack:
+						[audioSubMenu addItem:newItem];
+						break;
+					default:
+						[otherSubMenu addItem:newItem];
+						break;
+				}
 				
 				#ifdef DEBUG
 				NSLog(@"Media: %@", [track attributeForKey:QTTrackMediaTypeAttribute]);		
@@ -143,6 +180,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 			}
 			
 			[self addCategoryMenu: videoSubMenu];
+			[self addCategoryMenu: subtitleSubMenu];
 			[self addCategoryMenu: audioSubMenu];
 			[self addCategoryMenu: otherSubMenu];
 		}
