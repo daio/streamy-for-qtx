@@ -105,14 +105,23 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 
 - (IBAction) toggleTrack: (id) sender {
 	QTTrack *track = [sender representedObject];
+	long trackType = [sender tag];
+	BOOL trackEnabled = [track isEnabled];
+	NSArray	*trackNeighbourItems = [[[sender parentItem] submenu] itemArray];
+	NSMenuItem *trackNeighbour;
 	
 	#ifdef DEBUG
-	NSLog(@"Toggled track: %@", [track description]);		
+	NSLog(@"Toggled track: %@", track);		
 	#endif
 	
-	if (track != nil) {
-		[track setEnabled:![track isEnabled]];
-	}
+	if (!trackEnabled)
+		if (([settingsController allowOnlyOneAudio] && (trackType == StreamyAudioTrack)) || 
+			([settingsController allowOnlyOneSubtitle] && (trackType == StreamySubtitleTrack))) {
+			for (trackNeighbour in trackNeighbourItems)
+				[[trackNeighbour representedObject] setEnabled:NO];
+		}
+
+	[track setEnabled:!trackEnabled];
 	
 	[self postRefresh:sender];
 }
@@ -159,15 +168,19 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 				trackType = [self getTrackType:track];
 				switch (trackType) {
 					case StreamyVideoTrack:
+						[newItem setTag:StreamyVideoTrack];
 						[videoSubMenu addItem:newItem];
 						break;
 					case StreamySubtitleTrack:
+						[newItem setTag:StreamySubtitleTrack];
 						[subtitleSubMenu addItem:newItem];
 						break;
 					case StreamyAudioTrack:
+						[newItem setTag:StreamyAudioTrack];
 						[audioSubMenu addItem:newItem];
 						break;
 					default:
+						[newItem setTag:StreamyOtherTrack];
 						[otherSubMenu addItem:newItem];
 						break;
 				}
