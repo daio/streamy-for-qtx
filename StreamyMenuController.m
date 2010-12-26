@@ -138,7 +138,6 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 
 
 - (void) addMovieMenu: (QTMovie *) qtMovie: (NSWindow *) curWindow {
-	NSEnumerator *tracksEnum;
 	NSMenuItem *newItem;
 	NSMenu *videoSubMenu;
 	NSMenu *audioSubMenu;
@@ -150,7 +149,6 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 	int trackType;
 	
 	if (qtMovie != nil) {
-		tracksEnum = [[qtMovie tracks] objectEnumerator];
 		loadState = [[qtMovie attributeForKey:QTMovieLoadStateAttribute] integerValue];
 		movieLoaded = loadState >= QTMovieLoadStatePlaythroughOK;
 		if (loadState >= QTMovieLoadStateLoaded) {
@@ -161,7 +159,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 			subtitleSubMenu = [self createCategoryMenu: @"Subtitles"];
 			otherSubMenu = [self createCategoryMenu: @"Other"];
 			
-			while ((track = [tracksEnum nextObject]) != nil) {
+			for (track in [qtMovie tracks]) {
 				newItem = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[track attributeForKey:QTTrackDisplayNameAttribute]
 																		  action:NULL keyEquivalent:@""];
 				[newItem setRepresentedObject:track];

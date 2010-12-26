@@ -10,5 +10,5 @@
 	StreamyController *streamyController;
 }
 
-@property (retain) StreamyController *streamyController;
+@property (nonatomic, retain) StreamyController *streamyController;
 @end
