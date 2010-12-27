@@ -51,21 +51,21 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 - (void) addMenuItem: (NSString *)menu_title:(SEL) menu_action:(id) menuTarget {
 	NSMenuItem *newItem;
 	
-	newItem = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:menu_title action:menu_action keyEquivalent:@""];
+	newItem = [[NSMenuItem alloc] initWithTitle:menu_title action:menu_action keyEquivalent:@""];
 	[newItem setTarget:menuTarget];
 	[topMenu addItem:newItem];
 	[newItem release];
 }
 
 
-- (void) addMovieBanner: (QTMovie *) qtMovie: (NSWindow *) curWindow {
+- (void) addMovieBanner: (NSWindow *) curWindow {
 	[topMenu addItem:[NSMenuItem separatorItem]];
 	[self addMenuItem: [curWindow title]: @selector(orderFront:) : curWindow];
 }
 
 
 - (NSMenu *) createCategoryMenu: (NSString *) title {
-	NSMenu *new_menu = [[NSMenu allocWithZone:[self zone]] initWithTitle:title];
+	NSMenu *new_menu = [[[NSMenu alloc] initWithTitle:title] autorelease];
 	
 	[new_menu setAutoenablesItems:NO];
 	
@@ -74,13 +74,12 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 
 
 - (void) addCategoryMenu:(NSMenu *) menu {
-	NSMenuItem *newItem = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[menu title] action:NULL keyEquivalent:@""];
+	NSMenuItem *newItem = [[NSMenuItem alloc] initWithTitle:[menu title] action:NULL keyEquivalent:@""];
 	
 	[newItem setHidden: ([menu numberOfItems] == 0)];
 	[newItem setSubmenu:menu];
 	[topMenu addItem:newItem];
 	[newItem release];
-	[menu release];
 }
 
 
@@ -145,6 +144,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 	NSMenu *otherSubMenu;
 	QTTrack *track;
 	QTMovieLoadState loadState;
+	NSAutoreleasePool *autoreleasePool;
 	BOOL movieLoaded;
 	int trackType;
 	
@@ -152,7 +152,8 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 		loadState = [[qtMovie attributeForKey:QTMovieLoadStateAttribute] integerValue];
 		movieLoaded = loadState >= QTMovieLoadStatePlaythroughOK;
 		if (loadState >= QTMovieLoadStateLoaded) {
-			[self addMovieBanner:qtMovie:curWindow];
+			[self addMovieBanner:curWindow];
+			autoreleasePool = [[NSAutoreleasePool alloc] init];
 			
 			videoSubMenu = [self createCategoryMenu: @"Video"];
 			audioSubMenu = [self createCategoryMenu: @"Audio"];
@@ -160,7 +161,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 			otherSubMenu = [self createCategoryMenu: @"Other"];
 			
 			for (track in [qtMovie tracks]) {
-				newItem = [[NSMenuItem allocWithZone:[self zone]] initWithTitle:[track attributeForKey:QTTrackDisplayNameAttribute]
+				newItem = [[NSMenuItem alloc] initWithTitle:[track attributeForKey:QTTrackDisplayNameAttribute]
 																		  action:NULL keyEquivalent:@""];
 				[newItem setRepresentedObject:track];
 				[newItem setTarget:self];
@@ -204,6 +205,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 			[self addCategoryMenu: audioSubMenu];
 			[self addCategoryMenu: subtitleSubMenu];
 			[self addCategoryMenu: otherSubMenu];
+			[autoreleasePool drain];
 		}
 	}
 	
@@ -246,7 +248,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 - (void) awakeFromNib {		
 	NSMenuItem* item;
 	
-	item = [[NSMenuItem allocWithZone:[self zone]] init];
+	item = [[NSMenuItem alloc] init];
 	[item setSubmenu: topMenu];
 	[[NSApp mainMenu] addItem: item];
 	[item release];
