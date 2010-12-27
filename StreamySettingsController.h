@@ -8,12 +8,12 @@
 NSString * const StreamySettingsCouldChange;
 
 @interface StreamySettingsController : NSWindowController {
-	IBOutlet NSButton *buttonAllowOnlyOneAudio;
-	IBOutlet NSButton *buttonAllowOnlyOneSubtitle;
-	IBOutlet NSButton *buttonShowRefreshInMenu;
-	IBOutlet NSButton *buttonShowAboutInMenu;
 @private
-	IBOutlet NSWindow *settingsWindow;
+	NSButton *buttonAllowOnlyOneAudio;
+	NSButton *buttonAllowOnlyOneSubtitle;
+	NSButton *buttonShowRefreshInMenu;
+	NSButton *buttonShowAboutInMenu;
+	NSWindow *settingsWindow;
 }
 
 - (BOOL) allowOnlyOneAudio;
@@ -28,9 +28,9 @@ NSString * const StreamySettingsCouldChange;
 - (IBAction) setShowRefreshInMenu: (id) sender;
 - (IBAction) setShowAboutInMenu: (id) sender;
 
-@property (nonatomic, retain) NSButton *buttonAllowOnlyOneAudio;
-@property (nonatomic, retain) NSButton *buttonAllowOnlyOneSubtitle;
-@property (nonatomic, retain) NSButton *buttonShowRefreshInMenu;
-@property (nonatomic, retain) NSButton *buttonShowAboutInMenu;
-@property (nonatomic, retain) NSWindow *settingsWindow;
+@property (nonatomic, retain) IBOutlet NSButton *buttonAllowOnlyOneAudio;
+@property (nonatomic, retain) IBOutlet NSButton *buttonAllowOnlyOneSubtitle;
+@property (nonatomic, retain) IBOutlet NSButton *buttonShowRefreshInMenu;
+@property (nonatomic, retain) IBOutlet NSButton *buttonShowAboutInMenu;
+@property (nonatomic, retain) IBOutlet NSWindow *settingsWindow;
 @end
