@@ -3,8 +3,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#define streamyAppID CFSTR("org.daio.Streamy")
-
 NSString * const StreamySettingsCouldChange;
 
 @interface StreamySettingsController : NSWindowController {
@@ -14,6 +12,7 @@ NSString * const StreamySettingsCouldChange;
 	NSButton *buttonShowRefreshInMenu;
 	NSButton *buttonShowAboutInMenu;
 	NSWindow *settingsWindow;
+	NSUserDefaults *userDefaults;
 }
 
 - (BOOL) allowOnlyOneAudio;
@@ -33,4 +32,5 @@ NSString * const StreamySettingsCouldChange;
 @property (nonatomic, retain) IBOutlet NSButton *buttonShowRefreshInMenu;
 @property (nonatomic, retain) IBOutlet NSButton *buttonShowAboutInMenu;
 @property (nonatomic, retain) IBOutlet NSWindow *settingsWindow;
+@property (nonatomic, retain) NSUserDefaults *userDefaults;
 @end

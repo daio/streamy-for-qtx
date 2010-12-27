@@ -3,10 +3,10 @@
 
 #import "StreamySettingsController.h"
 
-#define externalOneAudioKey		CFSTR("AllowOnlyOneAudio")
-#define externalOneSubtitleKey	CFSTR("AllowOnlyOneSubtitle")
-#define externalShowRefreshKey	CFSTR("ShowRefreshInMenu")
-#define externalShowAboutKey	CFSTR("ShowAboutInMenu")
+#define externalOneAudioKey		@"AllowOnlyOneAudio"
+#define externalOneSubtitleKey	@"AllowOnlyOneSubtitle"
+#define externalShowRefreshKey	@"ShowRefreshInMenu"
+#define externalShowAboutKey	@"ShowAboutInMenu"
 
 NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 
@@ -18,6 +18,8 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 	if (self == nil) {
 		return nil;
 	}
+	
+	userDefaults = [NSUserDefaults standardUserDefaults];
 	
 	return self;
 }
@@ -32,7 +34,7 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 
 
 - (void) syncSettings {
-	CFPreferencesAppSynchronize(streamyAppID);
+	[userDefaults synchronize];
 }
 
 
@@ -41,22 +43,16 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 }
 
 
-- (BOOL)getBoolFromKey:(CFStringRef)key withDefault:(BOOL)defaultValue
-{	
-	Boolean exists = FALSE;
-	BOOL ret;
-	
-    [self syncSettings];
-	ret = (BOOL)CFPreferencesGetAppBooleanValue(key, streamyAppID, &exists);
-	
-	return exists ? ret : defaultValue;
+- (BOOL)boolForKey:(NSString *)key
+{
+	return [userDefaults boolForKey:key];
 }
 
 - (void) refreshButtonsStates {
-	[buttonAllowOnlyOneAudio setState:[self getBoolFromKey:externalOneAudioKey withDefault:YES]];
-	[buttonAllowOnlyOneSubtitle setState:[self getBoolFromKey:externalOneSubtitleKey withDefault:YES]];
-	[buttonShowRefreshInMenu setState:[self getBoolFromKey:externalShowRefreshKey withDefault:YES]];
-	[buttonShowAboutInMenu setState:[self getBoolFromKey:externalShowAboutKey withDefault:YES]];
+	[buttonAllowOnlyOneAudio setState:[self boolForKey:externalOneAudioKey]];
+	[buttonAllowOnlyOneSubtitle setState:[self boolForKey:externalOneSubtitleKey]];
+	[buttonShowRefreshInMenu setState:[self boolForKey:externalShowRefreshKey]];
+	[buttonShowAboutInMenu setState:[self boolForKey:externalShowAboutKey]];
 }
 
 - (void) showSettings: (id) sender {
@@ -68,67 +64,49 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 
 
 - (IBAction) setAllowOnlyOneAudio: (id) sender {
-	CFPreferencesSetAppValue(externalOneAudioKey, [sender state] ? kCFBooleanTrue : kCFBooleanFalse, streamyAppID);
-	
+	[userDefaults setBool:(BOOL)[sender state] forKey:externalOneAudioKey];
     [self syncSettings];
-	[self settingsChanged];
 }
 
 
 - (IBAction) setAllowOnlyOneSubtitle: (id) sender {
-	CFPreferencesSetAppValue(externalOneSubtitleKey, [sender state] ? kCFBooleanTrue : kCFBooleanFalse, streamyAppID);
-	
+	[userDefaults setBool:(BOOL)[sender state] forKey:externalOneSubtitleKey];
     [self syncSettings];
-	[self settingsChanged];
 }
 
 
 - (IBAction) setShowRefreshInMenu: (id) sender {
-	CFPreferencesSetAppValue(externalShowRefreshKey, [sender state] ? kCFBooleanTrue : kCFBooleanFalse, streamyAppID);
-	
+	[userDefaults setBool:(BOOL)[sender state] forKey:externalShowRefreshKey];
     [self syncSettings];
-	[self settingsChanged];
 }
 
 - (IBAction) setShowAboutInMenu: (id) sender {
-	CFPreferencesSetAppValue(externalShowAboutKey, [sender state] ? kCFBooleanTrue : kCFBooleanFalse, streamyAppID);
-	
+	[userDefaults setBool:(BOOL)[sender state] forKey:externalShowAboutKey];
     [self syncSettings];
-	[self settingsChanged];
 }
 
 
 - (BOOL) allowOnlyOneAudio {
-	[self syncSettings];
-	
-	return [self getBoolFromKey:externalOneAudioKey withDefault:YES];
+	[self syncSettings];	
+	return [self boolForKey:externalOneAudioKey];
 }
 
 
 - (BOOL) allowOnlyOneSubtitle {
-	[self syncSettings];
-	
-	return [self getBoolFromKey:externalOneSubtitleKey withDefault:YES];
+	[self syncSettings];	
+	return [self boolForKey:externalOneSubtitleKey];
 }
 
 
 - (BOOL) showRefreshInMenu {
-	[self syncSettings];
-	
-	return [self getBoolFromKey:externalShowRefreshKey withDefault:YES];
+	[self syncSettings];	
+	return [self boolForKey:externalShowRefreshKey];
 }
 
 
 - (BOOL) showAboutInMenu {
-	[self syncSettings];
-	
-	return [self getBoolFromKey:externalShowAboutKey withDefault:YES];
-}
-
-
-- (void) outOfSettings {
-	[self syncSettings];
-	[self settingsChanged];
+	[self syncSettings];	
+	return [self boolForKey:externalShowAboutKey];
 }
 
 
@@ -141,8 +119,7 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 	
 	[self refreshButtonsStates];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outOfSettings) name:NSWindowDidResignKeyNotification object:settingsWindow];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(outOfSettings) name:NSWindowWillCloseNotification object:settingsWindow];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged) name:NSUserDefaultsDidChangeNotification object:userDefaults];
 }
 
 @synthesize buttonAllowOnlyOneAudio;
@@ -150,4 +127,5 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 @synthesize buttonShowRefreshInMenu;
 @synthesize buttonShowAboutInMenu;
 @synthesize settingsWindow;
+@synthesize userDefaults;
 @end
