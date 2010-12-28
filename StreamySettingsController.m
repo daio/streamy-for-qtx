@@ -25,8 +25,8 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 }
 
 - (void) dealloc {
-	[settingsWindow setReleasedWhenClosed:YES];
-	[settingsWindow close];
+	[[self window] setReleasedWhenClosed:YES];
+	[[self window] close];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	[super dealloc];
@@ -48,6 +48,7 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 	return [userDefaults boolForKey:key];
 }
 
+
 - (void) refreshButtonsStates {
 	[buttonAllowOnlyOneAudio setState:[self boolForKey:externalOneAudioKey]];
 	[buttonAllowOnlyOneSubtitle setState:[self boolForKey:externalOneSubtitleKey]];
@@ -55,11 +56,17 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 	[buttonShowAboutInMenu setState:[self boolForKey:externalShowAboutKey]];
 }
 
+
+- (void) showWindow:(id) sender {
+	[self showSettings:sender];
+}
+
+
 - (void) showSettings: (id) sender {
     [self syncSettings];
 	[self refreshButtonsStates];
 	
-	[self showWindow:sender];
+	[super showWindow:sender];
 }
 
 
@@ -113,9 +120,7 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 - (void)awakeFromNib {
     [self syncSettings];
 
-	[self setWindow:settingsWindow];
-	[settingsWindow setWindowController:self];
-	[settingsWindow setExcludedFromWindowsMenu:YES];
+	[[self window] setExcludedFromWindowsMenu:YES];
 	
 	[self refreshButtonsStates];
 	
@@ -126,6 +131,5 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 @synthesize buttonAllowOnlyOneSubtitle;
 @synthesize buttonShowRefreshInMenu;
 @synthesize buttonShowAboutInMenu;
-@synthesize settingsWindow;
 @synthesize userDefaults;
 @end
