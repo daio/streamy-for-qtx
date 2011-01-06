@@ -38,6 +38,7 @@
 }
 
 - (IBAction) refreshInfo: (id) sender {
+#pragma unused(sender)
 	NSWindow *curWindow;
 	NSArray *allWindows = [NSApp windows];
 	NSDocument *qtView;
@@ -66,6 +67,7 @@
 
 
 - (void) loadStateChanged: (NSNotification *) notification {
+#pragma unused(notification)
 	#ifdef DEBUG
 	NSLog(@"Load state changed");
 	#endif

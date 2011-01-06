@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		241F3AA212C94EA8007E0423 /* StreamyMoviePropertiesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 241F3AA112C94EA8007E0423 /* StreamyMoviePropertiesController.m */; };
 		241F3AB312C94F7B007E0423 /* StreamyMovieProperties.xib in Resources */ = {isa = PBXBuildFile; fileRef = 241F3AB212C94F7B007E0423 /* StreamyMovieProperties.xib */; };
+		241F3B1912C96C65007E0423 /* StreamyMovieDatasource.m in Sources */ = {isa = PBXBuildFile; fileRef = 241F3B1812C96C65007E0423 /* StreamyMovieDatasource.m */; };
 		245C046212C6BE9C003F561F /* StreamySettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 245C046112C6BE9C003F561F /* StreamySettings.xib */; };
 		245C046F12C6BEDD003F561F /* StreamySettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 245C046E12C6BEDD003F561F /* StreamySettingsController.m */; };
 		24703DF812C4330E006AAC56 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24703DF712C4330E006AAC56 /* QTKit.framework */; };
@@ -29,6 +30,8 @@
 		241F3AA012C94EA8007E0423 /* StreamyMoviePropertiesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamyMoviePropertiesController.h; sourceTree = "<group>"; };
 		241F3AA112C94EA8007E0423 /* StreamyMoviePropertiesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamyMoviePropertiesController.m; sourceTree = "<group>"; };
 		241F3AB212C94F7B007E0423 /* StreamyMovieProperties.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StreamyMovieProperties.xib; sourceTree = "<group>"; };
+		241F3B1712C96C65007E0423 /* StreamyMovieDatasource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamyMovieDatasource.h; sourceTree = "<group>"; };
+		241F3B1812C96C65007E0423 /* StreamyMovieDatasource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamyMovieDatasource.m; sourceTree = "<group>"; };
 		245C046112C6BE9C003F561F /* StreamySettings.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StreamySettings.xib; sourceTree = "<group>"; };
 		245C046D12C6BEDD003F561F /* StreamySettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamySettingsController.h; sourceTree = "<group>"; };
 		245C046E12C6BEDD003F561F /* StreamySettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamySettingsController.m; sourceTree = "<group>"; };
@@ -111,6 +114,8 @@
 				245C046E12C6BEDD003F561F /* StreamySettingsController.m */,
 				241F3AA012C94EA8007E0423 /* StreamyMoviePropertiesController.h */,
 				241F3AA112C94EA8007E0423 /* StreamyMoviePropertiesController.m */,
+				241F3B1712C96C65007E0423 /* StreamyMovieDatasource.h */,
+				241F3B1812C96C65007E0423 /* StreamyMovieDatasource.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -222,6 +227,7 @@
 				24EC0E7D12C510D400D41E61 /* StreamySIMBLLoader.m in Sources */,
 				245C046F12C6BEDD003F561F /* StreamySettingsController.m in Sources */,
 				241F3AA212C94EA8007E0423 /* StreamyMoviePropertiesController.m in Sources */,
+				241F3B1912C96C65007E0423 /* StreamyMovieDatasource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

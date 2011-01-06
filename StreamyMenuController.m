@@ -44,23 +44,32 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 }
 
 - (void) postRefresh: (id) sender {
+#pragma unused(sender)
 	[[NSNotificationCenter defaultCenter] postNotificationName:StreamyNeedsRefresh object:self];
 }
 
 
-- (void) addMenuItem: (NSString *)menu_title:(SEL) menu_action:(id) menuTarget {
+- (void) addMenuItem: (NSString *)menu_title:(SEL) menu_action:(id) menuTarget:(id) representedObject {
 	NSMenuItem *newItem;
 	
 	newItem = [[NSMenuItem alloc] initWithTitle:menu_title action:menu_action keyEquivalent:@""];
 	[newItem setTarget:menuTarget];
+	if (representedObject != nil)
+		[newItem setRepresentedObject:representedObject];
 	[topMenu addItem:newItem];
 	[newItem release];
 }
 
 
-- (void) addMovieBanner: (NSWindow *) curWindow {
+- (void) showMovieProperties: (id) sender {
+	QTMovie *qtMovie = (QTMovie *)[sender representedObject];
+	[[StreamyMoviePropertiesController alloc] initWithMovie: qtMovie];
+}
+
+
+- (void) addMovieBanner: (QTMovie *) qtMovie :(NSWindow *) curWindow {
 	[topMenu addItem:[NSMenuItem separatorItem]];
-	[self addMenuItem: [curWindow title]: @selector(orderFront:) : curWindow];
+	[self addMenuItem: [curWindow title]: @selector(showMovieProperties:) : self : qtMovie];
 }
 
 
@@ -213,6 +222,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 
 
 - (IBAction) orderFrontAboutPanel: (id) sender {
+#pragma unused(sender)
 	NSImage* icon = [[NSWorkspace sharedWorkspace] iconForFileType: @"bundle"];
 	[icon setSize: NSMakeSize(128, 128)];
 	NSDictionary* options;
@@ -229,6 +239,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 }
 
 - (void) callSettings: (id) sender {
+#pragma unused(sender)
 	[settingsController showSettings:self];
 }
 
