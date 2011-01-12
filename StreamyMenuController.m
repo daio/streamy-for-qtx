@@ -5,6 +5,7 @@
 #import <QuickTime/QuickTime.h>
 #import <QTKit/QTKit.h>
 #import "StreamySettingsController.h"
+#import "StreamyMoviePropertiesController.h"
 
 NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 
@@ -161,7 +162,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 		loadState = [[qtMovie attributeForKey:QTMovieLoadStateAttribute] integerValue];
 		movieLoaded = loadState >= QTMovieLoadStatePlaythroughOK;
 		if (loadState >= QTMovieLoadStateLoaded) {
-			[self addMovieBanner:curWindow];
+			[self addMovieBanner:qtMovie:curWindow];
 			autoreleasePool = [[NSAutoreleasePool alloc] init];
 			
 			videoSubMenu = [self createCategoryMenu: @"Video"];
@@ -249,10 +250,10 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 	[topMenu setAutoenablesItems:NO];
 	
 	if ([settingsController showAboutInMenu])
-		[self addMenuItem: @"About": @selector(orderFrontAboutPanel:) : self];
+		[self addMenuItem: @"About": @selector(orderFrontAboutPanel:) : self:nil];
 	if ([settingsController showRefreshInMenu])
-		[self addMenuItem: @"Refresh": @selector(postRefresh:) : self];
-	[self addMenuItem: @"Settings" : @selector(callSettings:) :self];
+		[self addMenuItem: @"Refresh": @selector(postRefresh:) : self:nil];
+	[self addMenuItem: @"Settings" : @selector(callSettings:) :self:nil];
 }
 
 

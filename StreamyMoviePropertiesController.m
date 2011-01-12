@@ -7,18 +7,35 @@
 
 @implementation StreamyMoviePropertiesController
 
-
-- (void) showWindow:(id)sender {
-	[self showProperties:sender];
-}
-
-
-- (void) showProperties:(id)sender {
+- (void) buildTracksArray {
+	QTTrack *track;
 	
-	[super showWindow:sender];
+	if (movie != nil)
+		for (track in [movie tracks])
+			[tracksArray insertObject:[track description]
+							  atIndex:(NSUInteger)[track attributeForKey:QTTrackIDAttribute]]; 
+}
+
+- (void) refreshTracksTable {
+	[self buildTracksArray];
+	
 }
 
 
+- (id) initWithMovie: (QTMovie *) qtMovie {
+	self = [super initWithWindowNibName:@"StreamyMovieProperties"];
+	
+	if (self == nil)
+		return nil;
+	
+	movie = qtMovie;
+	
+	[self refreshTracksTable];
+	
+	return self;
+}
+
+@synthesize movie;
 @synthesize buttonExtract;
 @synthesize buttonDelete;
 @synthesize tracksTable;
