@@ -41,7 +41,7 @@
 #pragma unused(sender)
 	NSWindow *curWindow;
 	NSArray *allWindows = [NSApp windows];
-	NSDocument *qtView;
+	id qtView;
 	NSDocumentController *documentController = [NSDocumentController sharedDocumentController];
 	
 	[menuController resetMenuToDefault];
