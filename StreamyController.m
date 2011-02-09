@@ -48,7 +48,7 @@
 	for (curWindow in allWindows) {
 		qtView = [documentController documentForWindow:curWindow];
 		
-		if (qtView != nil) {			
+		if (qtView != nil) {
 			#ifdef DEBUG
 			NSLog(@"%@",[[curWindow contentView] printJobTitle]);
 			#endif
@@ -58,7 +58,7 @@
 				NSLog(@"Found a movie!");
 				#endif
 				
-				[menuController addMovieMenu:[qtView movie] :curWindow];
+				[menuController addMovieMenu:[qtView movie] :curWindow]; // ignore warnings about incompatible pointer types, xcode is dumb
 			}
 		}
 	}

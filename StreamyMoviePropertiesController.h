@@ -15,6 +15,7 @@
 	NSTableView * tracksTable;
 	NSTableView * annotationsTable;
 	NSTableView * resourcesTable;
+    NSMutableDictionary * createdWindowsForMovies;
 }
 
 + (void) showMoviePropertiesFor: (QTMovie *) qtMovie;
@@ -27,4 +28,5 @@
 @property (nonatomic, retain, readonly) IBOutlet NSTableView * tracksTable;
 @property (nonatomic, retain, readonly) IBOutlet NSTableView * annotationsTable;
 @property (nonatomic, retain, readonly) IBOutlet NSTableView * resourcesTable;
+@property (nonatomic, retain, readonly) NSMutableDictionary * createdWindowsForMovies;
 @end

@@ -64,7 +64,7 @@ NSString * const StreamyNeedsRefresh = @"StreamyNeedsRefresh";
 
 - (void) showMovieProperties: (id) sender {
 	QTMovie *qtMovie = (QTMovie *)[sender representedObject];
-	[[StreamyMoviePropertiesController alloc] initWithMovie: qtMovie];
+    [StreamyMoviePropertiesController showMoviePropertiesFor: qtMovie];
 }
 
 

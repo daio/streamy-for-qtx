@@ -18,9 +18,12 @@
 
 - (void) refreshTracksTable {
 	[self buildTracksArray];
-	
 }
 
+
++ (void) showMoviePropertiesFor: (QTMovie *) qtMovie {
+    [[self alloc] initWithMovie: qtMovie];
+}
 
 - (id) initWithMovie: (QTMovie *) qtMovie {
 	self = [super initWithWindowNibName:@"StreamyMovieProperties"];
@@ -32,6 +35,7 @@
 	
 	[self refreshTracksTable];
 	
+    [self showWindow: nil];
 	return self;
 }
 
