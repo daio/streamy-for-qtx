@@ -24,6 +24,6 @@ NSString * const StreamyNeedsRefresh;
 - (void) addMovieMenu: (QTMovie *) qtMovie : (NSWindow *) curWindow;
 - (void) resetMenuToDefault;
 
-@property (nonatomic, retain) IBOutlet NSMenu* topMenu;
-@property (nonatomic, retain) IBOutlet StreamySettingsController *settingsController;
+@property (nonatomic, retain, readonly) IBOutlet NSMenu* topMenu;
+@property (nonatomic, retain, readonly) IBOutlet StreamySettingsController *settingsController;
 @end

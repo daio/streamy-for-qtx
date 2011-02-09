@@ -12,5 +12,5 @@
 }
 - (id) init;
 - (IBAction) refreshInfo: (id) sender;
-@property (nonatomic, retain) StreamyMenuController *menuController;
+@property (nonatomic, retain, readonly) StreamyMenuController *menuController;
 @end

@@ -22,9 +22,9 @@
 - (id) initWithMovie: (QTMovie *) qtMovie;
 
 @property (nonatomic, retain) QTMovie * movie;
-@property (nonatomic, retain) IBOutlet NSButton * buttonExtract;
-@property (nonatomic, retain) IBOutlet NSButton * buttonDelete;
-@property (nonatomic, retain) IBOutlet NSTableView * tracksTable;
-@property (nonatomic, retain) IBOutlet NSTableView * annotationsTable;
-@property (nonatomic, retain) IBOutlet NSTableView * resourcesTable;
+@property (nonatomic, retain, readonly) IBOutlet NSButton * buttonExtract;
+@property (nonatomic, retain, readonly) IBOutlet NSButton * buttonDelete;
+@property (nonatomic, retain, readonly) IBOutlet NSTableView * tracksTable;
+@property (nonatomic, retain, readonly) IBOutlet NSTableView * annotationsTable;
+@property (nonatomic, retain, readonly) IBOutlet NSTableView * resourcesTable;
 @end

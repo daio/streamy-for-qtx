@@ -124,7 +124,9 @@ NSString * const StreamySettingsCouldChange = @"StreamySettingsCouldChange";
 	
 	[self refreshButtonsStates];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged) name:NSUserDefaultsDidChangeNotification object:userDefaults];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged)
+                                                 name:NSUserDefaultsDidChangeNotification
+                                               object:userDefaults];
 }
 
 @synthesize buttonAllowOnlyOneAudio;

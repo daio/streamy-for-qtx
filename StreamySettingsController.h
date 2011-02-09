@@ -27,9 +27,9 @@ NSString * const StreamySettingsCouldChange;
 - (IBAction) setShowRefreshInMenu: (id) sender;
 - (IBAction) setShowAboutInMenu: (id) sender;
 
-@property (nonatomic, retain) IBOutlet NSButton *buttonAllowOnlyOneAudio;
-@property (nonatomic, retain) IBOutlet NSButton *buttonAllowOnlyOneSubtitle;
-@property (nonatomic, retain) IBOutlet NSButton *buttonShowRefreshInMenu;
-@property (nonatomic, retain) IBOutlet NSButton *buttonShowAboutInMenu;
-@property (nonatomic, retain) NSUserDefaults *userDefaults;
+@property (nonatomic, retain, readonly) IBOutlet NSButton *buttonAllowOnlyOneAudio;
+@property (nonatomic, retain, readonly) IBOutlet NSButton *buttonAllowOnlyOneSubtitle;
+@property (nonatomic, retain, readonly) IBOutlet NSButton *buttonShowRefreshInMenu;
+@property (nonatomic, retain, readonly) IBOutlet NSButton *buttonShowAboutInMenu;
+@property (nonatomic, retain, readonly) NSUserDefaults *userDefaults;
 @end

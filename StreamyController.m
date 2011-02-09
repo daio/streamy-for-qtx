@@ -2,7 +2,6 @@
 // Some rights reserved: <http://opensource.org/licenses/mit-license.php>
 
 #import "StreamyController.h"
-#import <objc/runtime.h>
 #import <QuickTime/QuickTime.h>
 #import <QuickTime/Movies.h>
 #import "QTKit/QTKit.h"
