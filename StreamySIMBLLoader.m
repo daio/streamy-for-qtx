@@ -8,7 +8,10 @@
 @implementation StreamySIMBLLoader
 
 + (void) load {
-	[[self alloc] init];
+    static StreamySIMBLLoader *plugin = nil;
+    
+    if (plugin == nil)
+        plugin = [[self alloc] init];
 }
 
 - (void) dealloc {
